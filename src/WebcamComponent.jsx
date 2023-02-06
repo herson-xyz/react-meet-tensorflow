@@ -1,4 +1,8 @@
-import { useRef, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import '@mediapipe/face_detection';
+import '@tensorflow/tfjs-core';
+import '@tensorflow/tfjs-backend-webgl';// Register WebGL backend.
+import * as faceDetection from '@tensorflow-models/face-detection';
 import Webcam from "react-webcam";
 
 const videoConstraints = {
@@ -9,10 +13,43 @@ const videoConstraints = {
 
 export default function WebcamComponent() {
     const webcamRef = useRef(null)
-    const capture = useCallback(() =>
+    const modelRef = useRef(null)
+    const predictionsRef = useRef(null);
+    const requestRef = useRef(null);
+    const [ready, setReady] = useState(false);
+
+    const capture = useCallback(async () =>
     {
-      const imageSrc = webcamRef.current.getScreenshot();
-    }, [webcamRef])
+      if (webcamRef.current && modelRef.current) {
+        const predictions = await modelRef.current.estimateFaces(
+          webcamRef.current.getCanvas()
+        );
+
+        if (predictions) {
+          console.log(predictionsRef)
+          predictionsRef.current = predictions;
+        }
+
+        if (!ready) {
+          setReady(true);
+        }
+      }
+
+      // requestRef.current = requestAnimationFrame(capture);
+    }, [webcamRef, ready])
+  
+    useEffect(() =>
+    {
+        const load = async () => {
+          const model = faceDetection.SupportedModels.MediaPipeFaceDetector;
+          const detectorConfig = {
+            runtime: 'tfjs', // or 'tfjs'
+          }
+          modelRef.current = await faceDetection.createDetector(model, detectorConfig);
+      };
+
+      load();
+    }, [capture]);
     
     return<>
         <Webcam
@@ -23,6 +60,15 @@ export default function WebcamComponent() {
             width={1280}
             videoConstraints={videoConstraints}
         />
-        <button onClick={capture}>Capture photo</button>
+        <button
+            onClick={() => {
+              requestRef.current = requestAnimationFrame(capture);
+            }}
+        >
+          Start face tracking{" "}
+          <span role="img" aria-label="Start">
+            🖐
+          </span>
+        </button>
     </>
 }

@@ -1,10 +1,10 @@
 # React-Three-Fiber + Tensorflow Experiment
 
 ### GIF of Latest Progress
-![](./gifs/2023-2-5-1.gif)
+![](./gifs/2023-2-5-2.gif)
 
 ## Description
-This project is an experiment to test the use of [react-three-fiber](https://github.com/pmndrs/react-three-fiber) and [Tensorflow](https://www.tensorflow.org/) in a project.
+This project is an experiment to test the use of [react-three-fiber](https://github.com/pmndrs/react-three-fiber) and [Tensorflow](https://www.tensorflow.org/) in a project. For face-detection, I'm using a [pre-trained TensorFlow model via npm](https://www.npmjs.com/package/@tensorflow-models/face-detection).
 
 ## Requirements
 - Node.js

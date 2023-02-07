@@ -1,7 +1,7 @@
 // Install dependencies       - DONE
 // Import dependencies        - DONE
 // Setup webcam and canvas    - DONE
-// Define references to those
+// Define references to those - DONE
 // Load facemesh
 // Detect function
 // Drawing utilities
@@ -20,7 +20,16 @@ export default function App() {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
 
+  const runFacemesh = async () =>
+  { 
+    const net = await facemesh.load(
+      {
+        inputResolution:{width:640, height:480}, scale:0.8
+      })
+  }
+
   return <>
+    <header className="App-header">
     <Webcam ref={webcamRef} style={
       {
         position: "absolute",
@@ -47,5 +56,6 @@ export default function App() {
         height:480
       }
     } />
+    </header>
     </>
 }

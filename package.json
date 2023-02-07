@@ -9,14 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.56.18",
-    "@react-three/fiber": "^8.11.0",
-    "@tensorflow-models/face-detection": "^1.0.1",
-    "maath": "^0.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-webcam": "^7.0.1",
-    "valtio": "^1.10.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
